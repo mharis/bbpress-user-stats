@@ -6,7 +6,7 @@
  * Version:           1.0.0
  * Author:            Muhammad Haris
  * Author URI:        http://mharis.net
- * Text Domain:       mharis_bbp_user_stats
+ * Text Domain:       mhar_bbp_user_stats
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * GitHub Plugin URI: https://github.com/mharis/bbpress-user-stats
@@ -29,8 +29,8 @@ add_filter( 'user_row_actions', 'mhar_add_view_stats_link', 10, 2 );
 function mhar_add_stats_page() {
 	add_submenu_page(
 		'options.php', // hidden page
-		__( 'bbPress User Stats', 'mharis_bbp_user_stats' ),
-		__( 'bbPress User Stats', 'mharis_bbp_user_stats' ),
+		__( 'bbPress User Stats', 'mhar_bbp_user_stats' ),
+		__( 'bbPress User Stats', 'mhar_bbp_user_stats' ),
 		'manage_options',
 		'bbp-user-stats',
 		'mhar_stats_view'
@@ -89,6 +89,10 @@ function mhar_stats_view() { ?>
 	<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
 	
 	<?php
+	if( ! $_GET['user']) {
+		return;
+	}
+
 	$posts = mhar_get_posts($_GET['user']);
 
 	if( isset( $_POST['month'] ) && $_POST['month'] != -1 ) {
@@ -125,35 +129,35 @@ function mhar_stats_view() { ?>
 		<div class="tablenav top">
 			<div class="alignleft actions">
 				<select name="month">
-					<option value="-1" selected="selected">Select Month</option>
+					<option value="-1" selected="selected"><?php _e('Select Month', 'mhar_bbp_user_stats'); ?></option>
 					<?php foreach( $months as $month_in_number => $month_in_text ): ?>
 					<option value="<?php echo $month_in_number; ?>" <?php selected($month_in_number, $selected_month, true) ?>><?php echo $month_in_text; ?></option>
 					<?php endforeach; ?>
 				</select>
-				<input type="submit" name="" id="doaction" class="button action" value="Apply">
+				<input type="submit" name="" id="doaction" class="button action" value="<?php _e('Apply', 'mhar_bbp_user_stats'); ?>">
 			</div>
 			<div class="alignleft actions">
 				<select name="year">
-					<option value="-1" selected="selected">Select Year</option>
+					<option value="-1" selected="selected"><?php _e('Select Year', 'mhar_bbp_user_stats'); ?></option>
 					<?php foreach(range(date('Y', strtotime($posts[0]->post_date)), date('Y')) as $year): ?>
 					<option value="<?php echo $year; ?>" <?php selected($year, $selected_year, true) ?>><?php echo $year; ?></option>
 					<?php endforeach; ?>
 				</select>
-				<input type="submit" name="" id="doaction" class="button action" value="Apply">
+				<input type="submit" name="" id="doaction" class="button action" value="<?php _e('Apply', 'mhar_bbp_user_stats'); ?>">
 			</div>
 		</div>
 	</form>
 	<table class="wp-list-table widefat fixed posts">
 		<thead>
 			<tr>
-				<th><?php _e('Day', 'bbp-user-stats'); ?></th>
-				<th><?php _e('Number of Posts', 'bbp-user-stats'); ?></th>
+				<th><?php _e('Day', 'mhar_bbp_user_stats'); ?></th>
+				<th><?php _e('Number of Posts', 'mhar_bbp_user_stats'); ?></th>
 			</tr>
 		</thead>
 		<tfoot>
 			<tr>
-				<th><?php _e('Day', 'bbp-user-stats'); ?></th>
-				<th><?php _e('Number of Posts', 'bbp-user-stats'); ?></th>
+				<th><?php _e('Day', 'mhar_bbp_user_stats'); ?></th>
+				<th><?php _e('Number of Posts', 'mhar_bbp_user_stats'); ?></th>
 			</tr>
 		</tfoot>
 		<tbody>
