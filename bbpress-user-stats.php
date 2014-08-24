@@ -147,6 +147,7 @@ function mhar_stats_view() { ?>
 			</div>
 		</div>
 	</form>
+	<?php if( $sorted_posts ): ?>
 	<table class="wp-list-table widefat fixed posts">
 		<thead>
 			<tr>
@@ -169,5 +170,8 @@ function mhar_stats_view() { ?>
 			<?php endforeach; ?>
 		</tbody>
 	</table>
+	<?php else: ?>
+	<p><?php _e('No stats found.', 'mhar_bbp_user_stats'); ?></p>
+	<?php endif; ?>
 </div>
 <?php }
